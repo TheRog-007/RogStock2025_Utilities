@@ -1,0 +1,12 @@
+ROGSTOCK 2025 - COLOUR THEME
+============================
+In resources folder have file: rogstock2025theme.thm, which is loaded into a list
+
+Text file structure:
+Control type, property e.g. Text/backcolor,  colour  (as integer or whatever numeric format colours are stored in in .Net)
+
+Control could also be used for custom items e.e. Line, to change colour of line manually drawn across the screen
+
+Note: this can be a many-many relationship as there are fore and back colours
+      Line colour would need to be a var in clsView used by forms paint event
+	  

@@ -407,7 +407,7 @@ namespace RogStock2025_Utilities.Screens
 
         private void BTNClose_Click(object sender, EventArgs e)
         {
-            Modules.clsView_Utilities.RemoveFromOpenForms(this.ParentForm, this.Text);
+            Modules.clsView_Utilities.RemoveFromOpenForms(this.Text);
             this.Close();
         }
 

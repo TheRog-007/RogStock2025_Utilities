@@ -1,0 +1,16 @@
+TODO - RogStock 2025 Utilities
+
+- onclose lose changes check*
+- deleted items history tables*
+- retest all forms
+- user manual
+- technical manual
+
+screens:
+
+
+
+
+
+
+Note: screen 1280x720

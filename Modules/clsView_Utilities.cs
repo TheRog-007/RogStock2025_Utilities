@@ -19,12 +19,136 @@ namespace RogStock2025_Utilities.Modules
         //used for theme custom line colour
         static int clrLine = 0;
         //list used to store theme colours
-        static string[,,] aryThemeColours = new string[100, 100, 100];
+        static string[,,] aryThemeColours = new string[51, 51, 51];
         static int intAryPos = 1;
+        static Form frmMain = null;
 
         //used for readonly datagrid columns
         public static Color CNST_INT_READONLYCOLUMNSCOLOUR = Color.LightGray; // .DarkGray;
         public static string CNST_STR_OPENFORMSCONTROL = "CMBOpenScreens";
+
+        //list of colours used by theme maintenance and colour palette forms
+
+        //Note: there are actually 137 solidcolours but some where deleted
+        //      as they looked the same as others!
+        public static string[] aryColours = {
+                "Aqua",
+                "Aquamarine",
+                "Black",
+                "Blue",
+                "BlueViolet",
+                "Brown",
+                "BurlyWood",
+                "CadetBlue",
+                "Chartreuse",
+                "Chocolate",
+                "Coral",
+                "CornflowerBlue",
+                "Crimson",
+                "Cyan",
+                "DarkBlue",
+                "DarkCyan",
+                "DarkGoldenrod",
+                "DarkGray",
+                "DarkGreen",
+                "DarkKhaki",
+                "DarkMagenta",
+                "DarkOliveGreen",
+                "DarkOrange",
+                "DarkOrchid",
+                "DarkRed",
+                "DarkSalmon",
+                "DarkSeaGreen",
+                "DarkSlateBlue",
+                "DarkSlateGray",
+                "DarkTurquoise",
+                "DarkViolet",
+                "DeepPink",
+                "DeepSkyBlue",
+                "DodgerBlue",
+                "Firebrick",
+                "FloralWhite",
+                "ForestGreen",
+                "Fuchsia",
+                "Gold",
+                "Goldenrod",
+                "Gray",
+                "Green",
+                "GreenYellow",
+                "HotPink",
+                "IndianRed",
+                "Indigo",
+                "Ivory",
+                "Khaki",
+                "LawnGreen",
+                "LemonChiffon",
+                "LightBlue",
+                "LightCoral",
+                "LightGray",
+                "LightGreen",
+                "LightPink",
+                "LightSalmon",
+                "LightSeaGreen",
+                "LightSkyBlue",
+                "LightSteelBlue",
+                "Lime",
+                "LimeGreen",
+                "Magenta",
+                "Maroon",
+                "MediumAquamarine",
+                "MediumBlue",
+                "MediumOrchid",
+                "MediumPurple",
+                "MediumSeaGreen",
+                "MediumSlateBlue",
+                "MediumSpringGreen",
+                "MediumTurquoise",
+                "MediumVioletRed",
+                "MidnightBlue",
+                "Moccasin",
+                "NavajoWhite",
+                "Navy",
+                "Olive",
+                "OliveDrab",
+                "Orange",
+                "OrangeRed",
+                "Orchid",
+                "PaleGoldenrod",
+                "PaleGreen",
+                "PaleTurquoise",
+                "PaleVioletRed",
+                "PeachPuff",
+                "Peru",
+                "Pink",
+                "Plum",
+                "PowderBlue",
+                "Purple",
+                "Red",
+                "RosyBrown",
+                "RoyalBlue",
+                "SaddleBrown",
+                "Salmon",
+                "SandyBrown",
+                "SeaGreen",
+                "Sienna",
+                "Silver",
+                "SkyBlue",
+                "SlateGray",
+                "SpringGreen",
+                "SteelBlue",
+                "Tan",
+                "Teal",
+                "Thistle",
+                "Tomato",
+                "Turquoise",
+                "Violet",
+                "Wheat",
+                "White",
+                "Yellow",
+                "YellowGreen"
+        };
+
+
 
         //************* internal class for colour "theme"
         internal class clsMenuColourScheme : ToolStripProfessionalRenderer
@@ -99,6 +223,26 @@ namespace RogStock2025_Utilities.Modules
 
         }
 
+        public static int PopulateThemeArraysForForm(ref string[,,] aryThemeColoursNew, ref string[,,] aryThemeColoursOld)
+        {
+            int intNum = 1;
+
+            while (aryThemeColours[intNum, 0, 0] != null)
+            {
+                aryThemeColoursNew[intNum, 0, 0] = aryThemeColours[intNum, 0, 0];
+                aryThemeColoursNew[0, intNum, 0] = aryThemeColours[0, intNum, 0];
+                aryThemeColoursNew[0, 0, intNum] = aryThemeColours[0, 0, intNum];
+
+                aryThemeColoursOld[intNum, 0, 0] = aryThemeColours[intNum, 0, 0];
+                aryThemeColoursOld[0, intNum, 0] = aryThemeColours[0, intNum, 0];
+                aryThemeColoursOld[0, 0, intNum] = aryThemeColours[0, 0, intNum];
+                intNum++;
+            }
+
+            return intNum;
+        }
+
+
         public static void ReadThemeData()
         {
             /*
@@ -111,7 +255,8 @@ namespace RogStock2025_Utilities.Modules
 
             string[] aryTemp = null;
             string strTemp = "";
-            StreamReader stmRead = null; 
+            StreamReader stmRead = null;
+            int intNum = 1;
 
             strTemp = Path.GetDirectoryName(Application.ExecutablePath)+ @"\Resources\rogstock2025theme.thm";
 
@@ -124,19 +269,32 @@ namespace RogStock2025_Utilities.Modules
 
             try
             {
+                intAryPos = 1;
+                //fill array with null as this procedure is called when application loads
+                //AND when theme maintenance is loaded
+                for(intNum =1; intNum != 51;intNum++)
+                {
+                    aryThemeColours[intNum, 0, 0] = null;
+                    aryThemeColours[0, intNum, 0] = null;
+                    aryThemeColours[0, 0, intNum] = null;
+                }
+
                 stmRead = new StreamReader(strTemp);
 
                 //read file and store in array
-                while (stmRead.Read() != -1)
+                while (stmRead.Peek() != -1)
                 {
                     strTemp = stmRead.ReadLine();
                     //split by: ,
                     aryTemp = strTemp.Split(",");
+
                     aryThemeColours[intAryPos, 0, 0] = aryTemp[0];
                     aryThemeColours[0, intAryPos, 0] = aryTemp[1];
                     aryThemeColours[0, 0, intAryPos] = aryTemp[2];
                     intAryPos++;
                 }
+
+                stmRead.Close();
             }
             catch (Exception ex)
             {
@@ -145,7 +303,7 @@ namespace RogStock2025_Utilities.Modules
                 return;
             }
 
-            stmRead.Close();
+
         }
 
 
@@ -170,7 +328,7 @@ namespace RogStock2025_Utilities.Modules
 
         }
 
-        public static void RemoveFromOpenForms(Form frmTemp, string strText)
+        public static void RemoveFromOpenForms(string strText)
         {
             /*
              Created 10/03/2025 By Roger Williams
@@ -180,7 +338,6 @@ namespace RogStock2025_Utilities.Modules
             
              VARS
 
-             frmTemp        - main form
              strText        - text to remove
 
              Note: also makes sure not duplicating entires
@@ -189,8 +346,8 @@ namespace RogStock2025_Utilities.Modules
 
             Control[] aryTemp;
             ComboBox CMBTemp = null;
-
-            aryTemp = frmTemp.Controls.Find(CNST_STR_OPENFORMSCONTROL, true);
+           
+            aryTemp = frmMain.Controls.Find(CNST_STR_OPENFORMSCONTROL, true);
             //TSCMBOpenForms
             foreach (Control ctlTemp in aryTemp)
             {
@@ -204,7 +361,7 @@ namespace RogStock2025_Utilities.Modules
                 }
             }
         }
-        public static void AddToOpenForms(Form frmTemp, string strText)
+        public static void AddToOpenForms(string strText)
         {
             /*
              Created 10/03/2025 By Roger Williams
@@ -214,7 +371,6 @@ namespace RogStock2025_Utilities.Modules
             
              VARS
 
-             frmTemp        - main menu
              strText        - text to add
 
              Note: also makes sure not duplicating entires
@@ -223,8 +379,8 @@ namespace RogStock2025_Utilities.Modules
 
             Control[] aryTemp;
             ComboBox CMBTemp = null;
-
-            aryTemp = frmTemp.Controls.Find(CNST_STR_OPENFORMSCONTROL, true);
+       
+            aryTemp = frmMain.Controls.Find(CNST_STR_OPENFORMSCONTROL, true);
             //TSCMBOpenForms
             foreach (Control ctlTemp in aryTemp)
             {
@@ -288,32 +444,44 @@ namespace RogStock2025_Utilities.Modules
 
             if (frmTemp != null)
             {
-                foreach (Form frmFind in Application.OpenForms)
+                if (frmMain == null)
                 {
-                    if (frmFind.Name  == "frmMain_Utilities")
-                    {
-                        frmTemp.MdiParent = frmFind;
-                        //add to open form combobox
-                        AddToOpenForms(frmFind, frmTemp.Text);
-                        //hide menu
-                        foreach (Form frmMainMenu in Application.OpenForms)
-                        {
-                            if (frmMainMenu.Name == "frmMain_Utilities")
-                            {
-                                BTNTemp = (Button)frmMainMenu.Controls["BTNShowHide"];
-                                BTNTemp.PerformClick();
-                            }
-                        }
-                        break;
-                    }
+                    frmMain = Application.OpenForms["frmMain_Utilities"];
                 }
+
+                if (frmMain != null)
+                {
+                    frmTemp.MdiParent = frmMain;
+                    //add to open form combobox
+                    AddToOpenForms(frmTemp.Text);
+                    BTNTemp = (Button)frmMain.Controls["BTNShowHide"];
+                    BTNTemp.PerformClick();
+                }
+                //foreach (Form frmFind in Application.OpenForms)
+                //{
+                //    if (frmFind.Name  == "frmMain_Utilities")
+                //    {
+                //        frmTemp.MdiParent = frmFind;
+                //        //add to open form combobox
+                //        AddToOpenForms(frmFind, frmTemp.Text);
+                //        //hide menu
+                //        foreach (Form frmMainMenu in Application.OpenForms)
+                //        {
+                //            if (frmMainMenu.Name == "frmMain_Utilities")
+                //            {
+                //                BTNTemp = (Button)frmMainMenu.Controls["BTNShowHide"];
+                //                BTNTemp.PerformClick();
+                //            }
+                //        }
+                //        break;
+                //    }
+                // }
 
                 //position form
                 frmTemp.StartPosition = FormStartPosition.Manual;
                 frmTemp.Left = 50;
                 frmTemp.Top = 5;
                 frmTemp.Visible = true;
-               // frmTemp.Text = strWhat;
             }
         }
 
