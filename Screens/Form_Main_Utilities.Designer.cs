@@ -41,10 +41,10 @@
             MNUGroups = new ToolStripMenuItem();
             MNUMenuItems = new ToolStripMenuItem();
             MNUMenuSecurity = new ToolStripMenuItem();
+            MNUThemeMaintenance = new ToolStripMenuItem();
             MNULogins = new ToolStripMenuItem();
             MNULoginMaintenance = new ToolStripMenuItem();
             MNUExit = new ToolStripMenuItem();
-            MNUThemeMaintenance = new ToolStripMenuItem();
             PANOptions.SuspendLayout();
             PANMenu.SuspendLayout();
             MNUMainMenu.SuspendLayout();
@@ -163,6 +163,12 @@
             MNUMenuSecurity.Size = new Size(212, 24);
             MNUMenuSecurity.Text = "Menu Security";
             // 
+            // MNUThemeMaintenance
+            // 
+            MNUThemeMaintenance.Name = "MNUThemeMaintenance";
+            MNUThemeMaintenance.Size = new Size(212, 24);
+            MNUThemeMaintenance.Text = "Theme Maintenance";
+            // 
             // MNULogins
             // 
             MNULogins.DropDownItems.AddRange(new ToolStripItem[] { MNULoginMaintenance });
@@ -187,12 +193,6 @@
             MNUExit.Size = new Size(45, 23);
             MNUExit.Text = "Exit";
             MNUExit.Click += MNUExit_Click;
-            // 
-            // MNUThemeMaintenance
-            // 
-            MNUThemeMaintenance.Name = "MNUThemeMaintenance";
-            MNUThemeMaintenance.Size = new Size(212, 24);
-            MNUThemeMaintenance.Text = "Theme Maintenance";
             // 
             // frmMain_Utilities
             // 

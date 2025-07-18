@@ -1644,7 +1644,7 @@ namespace RogStock2025_Utilities.Modules
                             CMBTemp.Items.Add(SQLRead[1].ToString());
                         }
                     }
-
+                    
                     SQLRead.Close();
                     SQLConn.Close();
                 }

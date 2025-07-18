@@ -780,7 +780,7 @@ namespace RogStock2025_Utilities.Screens
 
             ResetSingleNewArrayValue();
         }
-
+        
         private void frmThemeMaintenance_Paint(object sender, PaintEventArgs e)
         {
             //320 x 590 top 15 draw border around embedded form

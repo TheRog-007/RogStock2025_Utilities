@@ -325,7 +325,7 @@ namespace RogStock2025_Utilities.Modules
                 return;
             }
 
-
+            
         }
 
         public static void RemoveFromOpenForms(string strText)
