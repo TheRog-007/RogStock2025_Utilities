@@ -9,7 +9,7 @@ This has lots of utilities for the system such as:
 - Main menu security
 - User management
 
-  Also features (in prograess):
+  Also features (in progress):
   - Bespoke SQL error system for reporting non SQL errors such as user password invalid
   - Theme - editable colour scheme for the project
   - New style mainmenu, desgined to work a bit like the evil Office ribbon
@@ -18,4 +18,4 @@ Also:
 - Updated and new documentation
 - Updated and revised clsView and clsData modules (which wil be used ion the main system as well)
 
-- 
+  
